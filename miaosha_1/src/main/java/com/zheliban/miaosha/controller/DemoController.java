@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +35,10 @@ public class DemoController {
 	public Result<String> helloError(){
 		return Result.error(CodeMsg.SERVER_ERROR);
 	}
-	
+	@RequestMapping("/thymeleaf")
+	public String  thymeleaf(Model model){
+		model.addAttribute("name", "三毛姑卡");
+		return "hello";
+	}
 
 }
