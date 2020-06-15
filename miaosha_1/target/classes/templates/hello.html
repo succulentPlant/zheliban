@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
-<html xmlns:th = "http://www.thymrleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>hello</title>
-	<meta http-equiv = "Content-Type" content = "text/html;charset = UTF-8"/>
+ <title>hello</title>
+ <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 </head>
 <body>
-<p th:text = "'hello:' + ${name}"></p>
+<!--/*@thymesVar id="name" type=""*/-->
+<p th:text="'hello:'+ ${name}">name</p >
 </body>
 <html>
