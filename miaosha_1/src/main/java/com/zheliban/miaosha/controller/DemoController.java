@@ -69,9 +69,16 @@ public class DemoController {
 	
 	@RequestMapping("/redis/get")
 	@ResponseBody
-	public Result<User> redisGet(){
-		userService.get(String,class<T> clazz);
-		return Result.success(user);
+	public Result<Long> redisGet(){
+		Long v1 = redisService.get("key", Long.class);
+		return Result.success(v1);
+	}
+	@RequestMapping("/redis/get")
+	@ResponseBody
+	public Result<String> rediset(){
+		boolean ret = redisService.set("key2", "hello,zheliban");
+		String str = redisService.get("key2", String.class);
+		return Result.success(str);
 	}
 	
 	

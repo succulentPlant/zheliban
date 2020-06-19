@@ -4,15 +4,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "redis")
+@ConfigurationProperties(prefix = "redis")	//通过这个注解可以读取到配置文件(.propertirs)里以redis开头的配置
 public class RedisConfig {
 	private String host;
 	private int port;
-	private int timeout;
+	private int timeout;//秒
 	private String password;
 	private int poolMaxTotal;
 	private int poolMaxIdle;
-	private int poolMaxWait;
+	private int poolMaxWait;//秒
 	public String getHost() {
 		return host;
 	}
