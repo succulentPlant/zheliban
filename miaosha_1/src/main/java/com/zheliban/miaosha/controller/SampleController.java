@@ -22,7 +22,7 @@ import com.zheliban.miaosha.service.UserService;
 
 @Controller
 @RequestMapping("/demo")
-public class DemoController {
+public class SampleController {
 	@Autowired
 	UserService userService;
 	
@@ -73,7 +73,7 @@ public class DemoController {
 		Long v1 = redisService.get("key", Long.class);
 		return Result.success(v1);
 	}
-	@RequestMapping("/redis/get")
+	@RequestMapping("/redis/set")
 	@ResponseBody
 	public Result<String> rediset(){
 		boolean ret = redisService.set("key2", "hello,zheliban");

@@ -8,7 +8,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Service
-public class RedisPoolFaction {
+public class RedisPoolFactory {
 	
 	@Autowired
 	RedisConfig redisConfig;

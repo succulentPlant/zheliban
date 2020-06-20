@@ -37,8 +37,8 @@ public class RedisService {		//希望通过service来提供redis的服务
 			if(str == null ||str.length() <= 0) {
 				return false;
 			}
-			jedis.set(key, value);
-			return true; 
+			jedis.set(key, str);
+			return true;  
 		} finally {
 			returnToPool(jedis);
 		}
