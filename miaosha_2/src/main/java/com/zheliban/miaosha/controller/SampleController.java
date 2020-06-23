@@ -20,10 +20,10 @@ import com.zheliban.miaosha.result.CodeMsg;
 import com.zheliban.miaosha.result.Result;
 import com.zheliban.miaosha.service.UserService;
 
-
 @Controller
 @RequestMapping("/demo")
 public class SampleController {
+	
 	@Autowired
 	UserService userService;
 	
@@ -85,5 +85,4 @@ public class SampleController {
 	}
 	
 	
-
 }
