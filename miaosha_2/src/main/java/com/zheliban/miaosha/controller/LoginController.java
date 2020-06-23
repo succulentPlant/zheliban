@@ -1,5 +1,7 @@
 package com.zheliban.miaosha.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 
@@ -19,33 +21,32 @@ import com.zheliban.miaosha.redis.UserKey;
 import com.zheliban.miaosha.result.CodeMsg;
 import com.zheliban.miaosha.result.Result;
 import com.zheliban.miaosha.service.UserService;
+import com.zheliban.miaosha.vo.LoginVo;
 
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+	
+	private static Logger log = LoggerFactory.getLogger(LoginController.class);
+	
 	@Autowired
 	UserService userService;
 	
 	@Autowired
 	RedisService redisService;
 	
-	@RequestMapping("/")
-	@ResponseBody
-	String home() {
-		return "hello aa";
-	}
 	//controller层的两种功能：1、rest api json输出 		 2、页面
 	
 	@RequestMapping("/to_login")
-	@ResponseBody
 	public String toLogin(){
 		return "login"; 
 	}
 	
 	@RequestMapping("/do_login")
 	@ResponseBody
-	public Result<Boolean> doLogin(){
+	public Result<Boolean> doLogin(LoginVo loginVo){
+		log.info(loginVo.toString());
 		return null;
 	}
 	
