@@ -5,7 +5,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class MD5Util {
 	
 	public static String md5(String src) {
-		return DigestUtils.md2Hex(src);
+		return DigestUtils.md5Hex(src);
 	}
 	
 	/*
@@ -35,7 +35,7 @@ public class MD5Util {
 	public static void main(String[] args) {
 		System.out.println(inputPassToFormPass("123456"));//用户实际传输密码123456，加密以后在网络中的明文传输是82a693d3173db016d77c59a41d302b20，即便这个串被不怀好意的人被截获并反查彩虹表，得到也只是121234563拼接后的密码，不是真正的密码
 		//System.out.println(formPassToDBPass(inputPassToFormPass("123456") ,"1a2b3c4d"));
-		//System.out.println(inputPassToDBPass("123456", "1a2b3c4d"));
+		System.out.println(inputPassToDBPass("123456", "1a2b3c4d"));
 	}
 
 }
