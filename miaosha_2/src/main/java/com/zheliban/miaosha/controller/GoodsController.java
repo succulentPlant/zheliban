@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.druid.util.StringUtils;
+import com.zheliban.miaosha.domain.MiaoshaUser;
 import com.zheliban.miaosha.domain.User;
 import com.zheliban.miaosha.redis.RedisService;
 import com.zheliban.miaosha.redis.UserKey;
@@ -33,10 +34,9 @@ import com.zheliban.miaosha.vo.LoginVo;
 
 
 @Controller
-@RequestMapping("/login")
-public class LoginController {
+@RequestMapping("/goods")
+public class GoodsController {
 	
-	private static Logger log = LoggerFactory.getLogger(LoginController.class);
 	
 	@Autowired
 	MiaoshaUserService userService;
@@ -44,21 +44,13 @@ public class LoginController {
 	@Autowired
 	RedisService redisService;
 	
-	//controller层的两种功能：1、rest api json输出 		 2、页面
-	
-	@RequestMapping("/to_login")
-	public String toLogin(){
-		return "login"; 
+	@RequestMapping("/to_list")
+	public String toLogin(Model model){
+		model.addAttribute("user", new MiaoshaUser());
+		return "goods_list"; 
 	}
 	
-	@RequestMapping("/do_login")
-	@ResponseBody
-	public Result<Boolean> doLogin(HttpServletResponse response , @Valid LoginVo loginVo){	//1、在参数前面打标签，意义在哪儿？
-		log.info(loginVo.toString());
-		userService.login(response,loginVo);//登录MiaoshaUserService，如果出现各种各样的异常GlobalException就向外抛，GlobalExceptionHande拦截异常将异常输出
-		return Result.success(true);
-	}
-	
+
 	
 
 }

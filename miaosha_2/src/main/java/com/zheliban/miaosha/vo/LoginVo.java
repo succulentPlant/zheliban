@@ -1,8 +1,23 @@
 package com.zheliban.miaosha.vo;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.zheliban.miaosha.validator.IsMobile;
+
 public class LoginVo {
+	/*
+	 * 在每一个需要校验的参数前面加注解
+	 */
+	@NotNull
+	@IsMobile		//自定义的注解
 	private String mobile;
+	
+	@NotNull
+	@Length(min=32)
 	private String password;
+	
 	public String getMobile() {
 		return mobile;
 	}

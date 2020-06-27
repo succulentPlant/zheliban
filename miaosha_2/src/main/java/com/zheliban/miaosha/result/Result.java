@@ -6,12 +6,12 @@ public class Result<T> {
 	private String msg;
 	private T data;
 	
-	private Result(T data) {
+	private Result(T data) {		//成功时候调用的构造函数
 		this.code = 0;
 		this.msg = "success";
 		this.data = data;
 	}
-	private Result(CodeMsg cm) {
+	private Result(CodeMsg cm) {	//失败的时候调用的构造函数
 		if(cm == null) {
 			return;
 		}
