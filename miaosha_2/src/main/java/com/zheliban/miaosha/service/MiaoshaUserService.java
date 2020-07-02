@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.druid.util.StringUtils;
 import com.zheliban.miaosha.dao.MiaoshaUserDao;
 import com.zheliban.miaosha.domain.MiaoshaUser;
 import com.zheliban.miaosha.exception.GlobalException;
@@ -21,7 +22,7 @@ import com.zheliban.miaosha.vo.LoginVo;
 @Service
 public class MiaoshaUserService {
 	
-	private static final String COOKIE_NAME_TOKEN = "token";
+	public static final String COOKIE_NAME_TOKEN = "token";
 	
 	@Autowired
 	MiaoshaUserDao miaoshaUserDao;
@@ -30,6 +31,15 @@ public class MiaoshaUserService {
 	
 	public  MiaoshaUser getById(long id){
 		return miaoshaUserDao.getById(id);
+	}
+	
+	public MiaoshaUser getByToken(String token) {
+		if(StringUtils.isEmpty(token)) {
+			return null;
+		}
+		//从缓存里取
+		return redisService.get(MiaoShaUserKey.token, token, MiaoshaUser.class);
+		
 	}
 	/*
 	 * 根据登录信息进行判断，
