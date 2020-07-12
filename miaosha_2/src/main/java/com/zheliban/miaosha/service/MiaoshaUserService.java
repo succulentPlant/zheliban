@@ -44,7 +44,7 @@ public class MiaoshaUserService {
 	/*
 	 * 根据登录信息进行判断，
 	 * 如果出现错误就抛出异常，交给GlobalExceptionHander处理
-	 * 否则，返回true
+	 * 否则，生成cookie写到response里去，返回true
 	 * 
 	 */
 	public boolean login(HttpServletResponse response ,  LoginVo loginVo) {		//返回真正代表业务逻辑的东西———登录（成功 or 失败）———boolean
@@ -67,7 +67,7 @@ public class MiaoshaUserService {
 		}
 		//生成cookie,写到response里去
 		String token = UUIDUtil.uuid();
-		redisService.set(MiaoShaUserKey.token, token, user);
+		redisService.set(MiaoShaUserKey.token, token, user);//秒杀用户的键前缀 通用唯一识别码UUID 用户id、name 
 		Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
 		cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());//设置cookie的有效期为MiaoShaUserKey.toke键前缀的有效期
 		cookie.setPath("/");//设置为网站的根目录

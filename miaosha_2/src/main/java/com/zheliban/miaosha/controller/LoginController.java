@@ -53,8 +53,8 @@ public class LoginController {
 	
 	@RequestMapping("/do_login")
 	@ResponseBody
-	public Result<Boolean> doLogin(HttpServletResponse response , @Valid LoginVo loginVo){	//1、在参数前面打标签，意义在哪儿？
-		log.info(loginVo.toString());
+	public Result<Boolean> doLogin(HttpServletResponse response , @Valid LoginVo loginVo){	//@Valid
+		log.info(loginVo.toString());//根据指定的格式和参数在INFO级别记录一条消息
 		userService.login(response,loginVo);//登录MiaoshaUserService，如果出现各种各样的异常GlobalException就向外抛，GlobalExceptionHande拦截异常将异常输出
 		return Result.success(true);
 	}
