@@ -8,7 +8,7 @@ import java.util.UUID;
  */
 public class UUIDUtil {
 	public static String uuid() {
-		return UUID.randomUUID().toString().replace("-", "");//jdk自带的，原生UUID
+		return UUID.randomUUID().toString().replace("-", "");//jdk自带的，原生UUID随机生成一个tooken
 	}
 
 }

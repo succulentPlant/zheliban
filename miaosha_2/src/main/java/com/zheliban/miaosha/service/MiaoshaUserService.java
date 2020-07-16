@@ -32,14 +32,19 @@ public class MiaoshaUserService {
 	public  MiaoshaUser getById(long id){
 		return miaoshaUserDao.getById(id);
 	}
-	
-	public MiaoshaUser getByToken(String token) {
+	/*
+	 * 根据token获取用户（根据键获取值）
+	 */
+	public MiaoshaUser getByToken(HttpServletResponse response,String token) {
 		if(StringUtils.isEmpty(token)) {
 			return null;
 		}
-		//从缓存里取
-		return redisService.get(MiaoShaUserKey.token, token, MiaoshaUser.class);
-		
+		MiaoshaUser user = redisService.get(MiaoShaUserKey.token, token, MiaoshaUser.class);
+        if (user!=null){
+            //重新生成cookie ，以延长用户session的有效期
+            addCookie(response,token,user);
+        }
+        return user;
 	}
 	/*
 	 * 根据登录信息进行判断，
@@ -64,17 +69,22 @@ public class MiaoshaUserService {
 		String calcPass = MD5Util.formPassToDBPass(formPass, dbSalt);
 		if(!calcPass.equals(dbPass)) {
 			throw new GlobalException(CodeMsg.PASSWORD_ERROR);
-		}
-		//生成cookie,写到response里去
+		}	
+		//生成通用唯一标识码
 		String token = UUIDUtil.uuid();
-		redisService.set(MiaoShaUserKey.token, token, user);//秒杀用户的键前缀 通用唯一识别码UUID 用户id、name 
-		Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
-		cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());//设置cookie的有效期为MiaoShaUserKey.toke键前缀的有效期
+		//生成cookie
+		addCookie(response,token,user);
+		return true;
+	}
+	/*
+	 *生成新的cookie写到response——传递
+	 */
+	private void addCookie(HttpServletResponse response, String token, MiaoshaUser user) {
+		redisService.set(MiaoShaUserKey.token, token, user);//秒杀用户的键前缀+通用唯一识别码UUID(键) 用户信息id、name(值)，写入缓存redis
+		Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);//生成一个cookie（name，vale）
+		cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());//为了保持一致性，把cookie的有效期设置为和MiaoShaUserKey.toke键前缀的有效期
 		cookie.setPath("/");//设置为网站的根目录
-		response.addCookie(cookie);//将cookie写到客户端里面去
-		return true; 
-		
-		
+		response.addCookie(cookie);//将cookie写到响应，继而传递到客户端
 	}
 
 }
