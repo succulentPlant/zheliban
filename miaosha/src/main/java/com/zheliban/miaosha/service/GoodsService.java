@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zheliban.miaosha.dao.GoodsDao;
+import com.zheliban.miaosha.domain.MiaoshaGoods;
 import com.zheliban.miaosha.vo.GoodsVo;
 
 
@@ -23,6 +24,12 @@ public class GoodsService {
 
 	public GoodsVo getGoodsVoByGoodsId(long goodsId) {
 		
-		return goodsDao.getGoodsVoByGoodsId(goodsId);
+		return goodsDao.getGoodsVoByGoodsId(goodsId);//返回秒杀商品详情
+	}
+
+	public void reduceStock(GoodsVo goods) {//减少库存
+		MiaoshaGoods g = new MiaoshaGoods();
+        g.setGoodsId(goods.getId());
+        goodsDao.reduceStock(g);
 	}
 }

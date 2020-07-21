@@ -3,7 +3,9 @@ package com.zheliban.miaosha.vo;
 import java.util.Date;
 
 import com.zheliban.miaosha.domain.Goods;
-
+/*
+ * 
+ */
 public class GoodsVo extends Goods {//将商品表和秒杀商品表整合到一块
 	
 	private Double miaoshaPrice;

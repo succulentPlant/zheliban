@@ -14,7 +14,7 @@ public class OrderInfo {
     private Integer status;
     private Date createDate;
     private Date payDate;
-	public Long getId() {
+	public Long getId() { 
 		return id;
 	}
 	public void setId(Long id) {

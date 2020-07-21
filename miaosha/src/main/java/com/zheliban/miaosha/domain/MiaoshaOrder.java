@@ -30,6 +30,7 @@ public class MiaoshaOrder {
 	public void setGoodsId(Long goodsId) {
 		this.goodsId = goodsId;
 	}
+	
     
 
 }
