@@ -29,23 +29,55 @@ public class MiaoshaUserService {
 	@Autowired
 	RedisService redisService;
 	
-	public  MiaoshaUser getById(long id){
-		return miaoshaUserDao.getById(id);
+	/*
+	 * 根据id获取用户
+	 */
+	public  MiaoshaUser getById(long id){	//对象缓存
+		//取缓存
+        MiaoshaUser user = redisService.get(MiaoShaUserKey.getById,""+id,MiaoshaUser.class);
+        if (user !=null){
+            return user;
+        }
+        //取数据库
+        user = miaoshaUserDao.getById(id);
+        if (user !=null){
+            redisService.set(MiaoShaUserKey.getById,""+id,user);//写进缓存
+        }
+        return user;
 	}
 	/*
-	 * 根据token获取用户（根据键获取值）
+	 * 根据token获取用户
 	 */
 	public MiaoshaUser getByToken(HttpServletResponse response,String token) {
 		if(StringUtils.isEmpty(token)) {
 			return null;
 		}
-		MiaoshaUser user = redisService.get(MiaoShaUserKey.token, token, MiaoshaUser.class);
-        if (user!=null){
-            //重新生成cookie ，以延长用户session的有效期
-            addCookie(response,token,user);
-        }
-        return user;
+		MiaoshaUser user = redisService.get(MiaoShaUserKey.token, token, MiaoshaUser.class);	//对象缓存
+		if (user!=null){
+			//重新生成cookie ，以延长用户session的有效期
+			addCookie(response,token,user);
+		}
+		return user;
 	}
+	/*
+	 * 改密码
+	 */
+	public boolean updatePassword(String token,long id,String formPass){
+        MiaoshaUser user = getById(id);
+        if (user==null){
+            throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
+        }
+        //更新数据库
+        MiaoshaUser toBeUpdate = new MiaoshaUser();
+        toBeUpdate.setId(id);
+        toBeUpdate.setPassword(MD5Util.formPassToDBPass(formPass,user.getSalt()));
+        miaoshaUserDao.update(toBeUpdate);
+        //处理缓存
+        redisService.delete(MiaoShaUserKey.getById,""+id);
+        user.setPassword(toBeUpdate.getPassword());
+        redisService.set(MiaoShaUserKey.token,token,user);
+        return true;
+    }
 	/*
 	 * 根据登录信息进行判断，
 	 * 如果出现错误就抛出异常，交给GlobalExceptionHander处理

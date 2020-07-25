@@ -34,7 +34,7 @@ public class RedisService {		//希望通过service来提供redis的服务
 		}
 	}
 	/*
-	 * 设置对象
+	 * 写对象
 	 */
 	public <T> boolean set(KeyPrefix prefix , String key ,T value ) {//写，键的前缀，键，值
 		Jedis jedis = null;
@@ -70,6 +70,19 @@ public class RedisService {		//希望通过service来提供redis的服务
 			returnToPool(jedis);
 		}
 	}
+	 /*
+     * 删除对象
+     */
+    public boolean delete(KeyPrefix prefix, String key) {//判断键是否存在
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            String realKey = prefix.getPrefix() + key;//拼接真正的键
+            return jedis.del(key)>0;
+        } finally {
+            returnToPool(jedis);
+        }
+    }
 	/*
 	 * 增加值
 	 */
@@ -136,6 +149,9 @@ public class RedisService {		//希望通过service来提供redis的服务
 		if(jedis != null) {
 			jedis.close();
 		}
+	}
+	public void delete(MiaoShaUserKey getById, String string) {
+		
 	}
 }
  

@@ -91,11 +91,12 @@
         $.ajax({
             url: "/login/do_login",
             type: "POST",
-            data: {
+            data: {	<!--参数传递给后端-->
                 mobile: $("#mobile").val(),
                 password: password
             },
-            success: function (data) {
+            success: function (data) {<!--这个data接收后端回调的数据-->
+	
                 layer.closeAll();
                 if (data.code == 0) {
                     layer.msg("成功");

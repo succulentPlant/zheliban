@@ -9,8 +9,8 @@ public class MiaoshaUser {
 	private String salt;
 	private String head;
 	private Date registerDate;//注册时间
-	private Date lastLoginDate;
-	private int loginCount;
+	private Date lastLoginDate;//上一次登录的时间
+	private int loginCount;//登录次数
 	public Long getId() {
 		return id;
 	}
