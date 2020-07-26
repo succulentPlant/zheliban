@@ -94,16 +94,16 @@ $(function(){
 })
 
 function getOrderDetail(){
-	var orderId = g_getQueryString("orderId");
+	var orderId = g_getQueryString("orderId");	<!--orderId是goods_detail.html跳转过来的携带的参数-->
 	$.ajax({
 		url:"/order/detail",
 		type:"GET",
 		data:{
 			orderId:orderId
 		},
-		success:function(data){
+		success:function(data)		{<!--服务端OrderController回调-->
 			if(data.code == 0){
-				render(data.data);
+				render(data.data);	<!--根据回调的数据OrderDetailVo渲染页面-->
 			}else{
 				layer.msg(data.msg);
 			}

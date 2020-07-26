@@ -146,7 +146,7 @@ public class GoodsController {
         vo.setRemainSeconds(remainSeconds);
         vo.setUser(user);
       
-        return Result.success(vo);
+        return Result.success(vo);	//返回订单详情GoodsDetailVo
     }
 	
 	

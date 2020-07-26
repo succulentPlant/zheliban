@@ -52,7 +52,7 @@
             <td th:text="${goods.goodsPrice}"></td>
             <td th:text="${goods.miaoshaPrice}"></td>
             <td th:text="${goods.stockCount}"></td>
-            <td><a th:href="'/goods/to_detail/'+${goods.id}">详情</a></td>	<!--跳转到商品的详情页面-->
+			<td><a th:href="'/goods_detail.htm?goodsId='+${goods.id}">详情</a></td><!--页面静态化，根据页面取到的goodsID直接跳转到商品的详情页，参数是goodId-->
         </tr>
     </table>
 </div>

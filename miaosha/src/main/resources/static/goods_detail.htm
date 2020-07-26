@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+ <!DOCTYPE HTML>
 <html >
 <head>
     <title>商品详情</title>
@@ -132,7 +132,7 @@ function getMiaoshaResult(goodsId){
 				}else{
 					layer.confirm("恭喜你，秒杀成功！查看订单？", {btn:["确定","取消"]},
 							function(){
-								window.location.href="/order_detail.htm?orderId="+result;
+								window.location.href="/order_detail.htm?orderId="+result;	<!--跳转到订单详情也，携带参数orderId-->
 							},
 							function(){
 								layer.closeAll();
@@ -170,7 +170,7 @@ function doMiaosha(path){
 	
 }
 
-function render(detail){
+function render(detail){						<!--渲染页面-->
 	var miaoshaStatus = detail.miaoshaStatus;
 	var  remainSeconds = detail.remainSeconds;
 	var goods = detail.goods;
@@ -194,19 +194,19 @@ $(function(){
 	getDetail();
 });
 
-function getDetail(){
-	var goodsId = g_getQueryString("goodsId");
-	$.ajax({
-		url:"/goods/detail/"+goodsId,
+function getDetail(){							<!--从服务端请求数据-->
+	var goodsId = g_getQueryString("goodsId");	<!--goodsId是goods_list.html跳转过来的携带的参数，g_getQueryString()是取参数的方法字在common参数里-->
+	$.ajax({									<!--发送请求-->
+		url:"/goods/detail/"+goodsId,			<!--构造资源定位符url，携带者参数goodsId-->
 		type:"GET",
-		success:function(data){
+		success:function(data){					<!--服务端GoodsController回调-->
 			if(data.code == 0){
-				render(data.data);
+				render(data.data);				<!--根据回调的的数据GoodsDetailVo渲染页面-->
 			}else{
 				layer.msg(data.msg);
 			}
 		},
-		error:function(){
+		error:function(){						<!--回调不成功-->
 			layer.msg("客户端请求有误");
 		}
 	});
